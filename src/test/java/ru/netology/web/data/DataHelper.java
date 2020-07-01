@@ -26,11 +26,11 @@ public class DataHelper {
 
     @Value
     public static class VerificationCode {
-        private val code;
+        private String code;
     }
 
     public static String getVerificationCodeForVasya() throws SQLException {
-        val verificationCode = "SELECT code FROM auth_codes WHERE user_id = 1;";
+        val verificationCode = "SELECT code FROM auth_codes WHERE created = (SELECT MAX(created) FROM auth_codes);";
 
         try (
                 val conn = DriverManager.getConnection(
@@ -50,3 +50,4 @@ public class DataHelper {
         return null;
     }
 }
+
