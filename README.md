@@ -14,10 +14,10 @@
 ### Prerequisites
 
 Перед началом работы убедитесь, что на вашем ПК установлены:
-*Git
-*IntelliJ IDEA CE с поддержкой Java
-*Docker Desktop
-*Браузер Google Chrome
+1.Git
+2.IntelliJ IDEA CE с поддержкой Java
+3.Docker Desktop
+4.Браузер Google Chrome
 
 Окружение:
 OS Version: Mac OS High Sierra
