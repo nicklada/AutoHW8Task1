@@ -2,13 +2,33 @@ package ru.netology.web.data;
 
 import lombok.Value;
 import lombok.val;
+import org.apache.commons.dbutils.QueryRunner;
 
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DataHelper {
+
     private DataHelper() {
     }
+
+    public static void cleanData() throws SQLException {
+        val runner = new QueryRunner();
+        val codes = "DELETE FROM auth_codes";
+        val cards = "DELETE FROM cards";
+        val users = "DELETE FROM users";
+
+        try (
+                val conn = DriverManager.getConnection(
+                        "jdbc:mysql://localhost:3306/app", "app", "pass"
+                )
+        ) {
+            runner.update(conn, codes);
+            runner.update(conn, cards);
+            runner.update(conn, users);
+        }
+    }
+
 
     @Value
     public static class AuthInfo {
@@ -18,10 +38,6 @@ public class DataHelper {
 
     public static AuthInfo getAuthInfo() {
         return new AuthInfo("vasya", "qwerty123");
-    }
-
-    public static AuthInfo getOtherAuthInfo(AuthInfo original) {
-        return new AuthInfo("petya", "123qwerty");
     }
 
     @Value
@@ -49,5 +65,6 @@ public class DataHelper {
         }
         return null;
     }
+
 }
 
