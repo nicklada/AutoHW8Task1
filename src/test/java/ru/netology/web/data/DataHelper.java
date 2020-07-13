@@ -40,6 +40,18 @@ public class DataHelper {
         return new AuthInfo("vasya", "qwerty123");
     }
 
+    public static AuthInfo getInvalidLoginAuthInfo() {
+        return new AuthInfo("kjhg", "qwerty123");
+    }
+
+    public static AuthInfo getInvalidPasswordAuthInfo() {
+        return new AuthInfo("vasya", "123");
+    }
+
+    public static String invalidPassword() {
+        return "iouiyutyrtytuyiikhj";
+    }
+
     @Value
     public static class VerificationCode {
         private String code;
@@ -64,6 +76,10 @@ public class DataHelper {
             }
         }
         return null;
+    }
+
+    public static String getInvalidVerificationCode() {
+        return "12345678";
     }
 
 }

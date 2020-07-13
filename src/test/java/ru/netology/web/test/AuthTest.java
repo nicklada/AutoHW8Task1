@@ -1,6 +1,5 @@
 package ru.netology.web.test;
 
-import com.codeborne.selenide.Condition;
 import lombok.val;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
@@ -8,8 +7,6 @@ import ru.netology.web.data.DataHelper;
 import ru.netology.web.page.LoginPage;
 
 import java.sql.SQLException;
-
-import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
 public class AuthTest {
@@ -33,7 +30,7 @@ public class AuthTest {
     void shouldNotEnterWhenInvalidLogin() {
         open("http://localhost:9999");
         val loginPage = new LoginPage();
-        val authInfo = new DataHelper.AuthInfo("kdjfdlk", "qwerty123");
+        val authInfo = DataHelper.getInvalidLoginAuthInfo();
         loginPage.invalidAuth(authInfo);
     }
 
@@ -41,7 +38,7 @@ public class AuthTest {
     void shouldNotEnterWhenInvalidPassword() {
         open("http://localhost:9999");
         val loginPage = new LoginPage();
-        val authInfo = new DataHelper.AuthInfo("vasya", "qwerty12345");
+        val authInfo = DataHelper.getInvalidPasswordAuthInfo();
         loginPage.invalidAuth(authInfo);
     }
 
@@ -51,7 +48,7 @@ public class AuthTest {
         val loginPage = new LoginPage();
         val authInfo = DataHelper.getAuthInfo();
         val verificationPage = loginPage.validAuth(authInfo);
-        val verificationCode = "897987928475";
+        val verificationCode = DataHelper.getInvalidVerificationCode();
         verificationPage.invalidVerify(verificationCode);
     }
 
@@ -59,11 +56,11 @@ public class AuthTest {
     void shouldBlockWhenThreeInvalidPasswords() {
         open("http://localhost:9999");
         val loginPage = new LoginPage();
-        val authInfo = new DataHelper.AuthInfo("petya", "qwerty12345");
+        val authInfo = DataHelper.getInvalidPasswordAuthInfo();
         loginPage.invalidAuth(authInfo);
-        loginPage.sendInvalidPassword("lkjdfkdl");
-        loginPage.sendInvalidPassword("lekjrekl");
-        $("[data-test-id=action-login]").shouldBe(Condition.disabled);
+        val invalidPassword = DataHelper.invalidPassword();
+        loginPage.sendInvalidPassword(invalidPassword);
+        loginPage.sendInvalidPasswordThirdTime(invalidPassword);
     }
 }
 

@@ -33,4 +33,13 @@ public class LoginPage {
         passwordField.sendKeys(password);
         loginButton.click();
     }
+
+    public void sendInvalidPasswordThirdTime(String password) {
+        passwordField.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        passwordField.doubleClick().sendKeys(Keys.DELETE);
+        passwordField.sendKeys(password);
+        loginButton.click();
+        loginButton.shouldBe(Condition.disabled);
+    }
+
 }
